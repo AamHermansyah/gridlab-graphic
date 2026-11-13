@@ -7,6 +7,16 @@ import { CheckIcon } from "../icons";
 
 export const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
+/** Tombol utama neon (lebar mengikuti wadah; beri `w-full` bila perlu). */
+export const PRIMARY_BUTTON = `${FOCUS} hud-cut-sm hud-glow flex h-11 items-center justify-center gap-2 bg-accent px-4 font-display text-base font-extrabold uppercase italic text-ink-950 transition-transform duration-150 active:scale-[0.97]`;
+
+/** Tombol sekunder berbingkai tipis. */
+export const GHOST_BUTTON = `${FOCUS} hud-cut-sm flex h-11 items-center justify-center gap-2 border border-white/15 px-4 font-display text-base font-bold uppercase italic text-white/80 transition-[border-color,color,transform] duration-150 hover:border-white/40 hover:text-white active:scale-95`;
+
+/** Gaya dasar kolom isian; tambahkan warna bingkai (`border-white/15` atau merah saat galat). */
+export const INPUT_CLASS =
+  "w-full border bg-white/5 px-3 text-sm text-white placeholder:text-white/30 outline-none transition-colors focus:border-accent";
+
 /** Label harga tambahan: "Standar" untuk 0, selain itu "+Rp ...". */
 export function extraPriceLabel(harga: number): string {
   return harga === 0 ? "Standar" : `+Rp ${formatRupiah(harga)}`;

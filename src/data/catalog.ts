@@ -108,6 +108,11 @@ export const CUSTOM_COLOR_ID = "kustom";
 /** Warna netral untuk pratinjau saat varian warna "Kustom" dipilih (warnanya belum diketahui). */
 export const CUSTOM_COLOR_PREVIEW_HEX = "#b8bcc4";
 
+/** Warna contoh sebuah varian warna decal (netral untuk "Kustom"). */
+export function getDecalColorHex(colorId: string): string {
+  return colorId === CUSTOM_COLOR_ID ? CUSTOM_COLOR_PREVIEW_HEX : findOption(DECAL_COLORS, colorId).hex;
+}
+
 /**
  * Bahan decal (MOCKUP: daftar dan harganya masih contoh, menunggu daftar bahan
  * asli). Harga adalah tambahan di atas harga desain decal.

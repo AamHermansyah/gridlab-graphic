@@ -3,6 +3,7 @@
 import { getBike } from "@/data/bikes";
 import { formatRupiah } from "@/data/catalog";
 import { selectDecalPrice, useConfigStore } from "@/store/useConfigStore";
+import { AccountButton } from "./account/AccountButton";
 import { SoundToggle } from "./SoundToggle";
 
 /** HUD atas: motor terpilih di kiri, estimasi harga decal (desain + bahan) di kanan. */
@@ -34,7 +35,10 @@ export function TopBar() {
             {formatRupiah(total)}
           </p>
         </div>
-        <SoundToggle />
+        <div className="flex items-center gap-2">
+          <AccountButton />
+          <SoundToggle />
+        </div>
       </div>
     </header>
   );

@@ -1,41 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   CUSTOM_COLOR_ID,
-  CUSTOM_COLOR_PREVIEW_HEX,
   DECAL_COLORS,
   DECAL_DESIGNS,
   DECAL_MATERIALS,
   findOption,
   formatRupiah,
+  getDecalColorHex,
 } from "@/data/catalog";
-import { drawDecal } from "@/lib/decalTextures";
 import { useConfigStore } from "@/store/useConfigStore";
 import type { DecalDesignId } from "@/types/catalog";
+import { DecalPreview } from "../DecalPreview";
 import { ArrowIcon, CheckIcon } from "../icons";
 import { ChoiceChip, FOCUS, Note, OptionCard, SectionTitle, extraPriceLabel } from "./controls";
 
 const DECAL_NOTES_MAX = 500;
-
-/** Pratinjau kecil sebuah desain decal dalam satu warna (kiri = belakang motor, kanan = depan). */
-function DecalPreview({ design, color }: { design: DecalDesignId; color: string }) {
-  const canvas = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const ctx = canvas.current?.getContext("2d");
-    if (ctx) drawDecal(ctx, design, color);
-  }, [design, color]);
-
-  return <canvas ref={canvas} width={384} height={192} className="aspect-[2/1] w-full bg-ink-700" aria-hidden="true" />;
-}
 
 /** Sub-langkah 1: kisi kartu semua desain. Memilih kartu membuka pengaturan desain itu. */
 function DesignGrid({ onConfigure }: { onConfigure: () => void }) {
   const decalDesign = useConfigStore((s) => s.decalDesign);
   const decalColor = useConfigStore((s) => s.decalColor);
   const setDecalDesign = useConfigStore((s) => s.setDecalDesign);
-  const colorHex = decalColor === CUSTOM_COLOR_ID ? CUSTOM_COLOR_PREVIEW_HEX : findOption(DECAL_COLORS, decalColor).hex;
+  const colorHex = getDecalColorHex(decalColor);
 
   return (
     <section aria-label="Desain decal">

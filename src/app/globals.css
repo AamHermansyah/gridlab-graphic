@@ -89,6 +89,39 @@ a[href] {
   display: none;
 }
 
+/* ---------- Overlay akun (login & riwayat) ---------- */
+
+@keyframes hud-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hud-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hud-fade-in {
+  animation: hud-fade-in 0.2s ease-out both;
+}
+.hud-rise-in {
+  animation: hud-rise-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hud-fade-in,
+  .hud-rise-in {
+    animation: none;
+  }
+}
+
 /* ---------- Loading screen ---------- */
 
 .loading-backdrop {

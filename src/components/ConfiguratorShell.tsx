@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import type { CSSProperties } from "react";
+import { AccountOverlay } from "@/components/ui/account/AccountOverlay";
 import { CameraPresetBar } from "@/components/ui/CameraPresetBar";
 import { ConfigPanel } from "@/components/ui/ConfigPanel";
 import { ControlHints } from "@/components/ui/ControlHints";
@@ -37,6 +38,7 @@ export function ConfiguratorShell() {
       <ControlHints />
       <CameraPresetBar />
       <ConfigPanel />
+      <AccountOverlay />
       <LoadingScreen visible={!sceneReady} />
       <UiSoundEffects />
     </main>
