@@ -38,8 +38,13 @@ interface ConfigState {
   swingarm: SwingarmId;
   /** Desain decal terpilih; null = belum memilih (pesanan wajib punya decal). */
   decalDesign: DecalDesignId | null;
+  /** Id varian warna, atau CUSTOM_COLOR_ID untuk warna di luar daftar. */
   decalColor: string;
+  /** Penjelasan warna saat decalColor = kustom (mis. "biru tosca"). */
+  decalCustomColor: string;
   decalMaterial: DecalMaterialId;
+  /** Permintaan kustom desain decal dalam teks bebas (mis. posisi gambar di bodi). */
+  decalNotes: string;
   order: OrderForm;
   /** true setelah data pesanan lolos validasi dan tombol "Buat Pesanan" ditekan. */
   orderPlaced: boolean;
@@ -59,6 +64,8 @@ interface ConfigState {
   setDecalDesign: (id: DecalDesignId) => void;
   setDecalColor: (id: string) => void;
   setDecalMaterial: (id: DecalMaterialId) => void;
+  setDecalCustomColor: (text: string) => void;
+  setDecalNotes: (text: string) => void;
   setOrderField: <K extends keyof OrderForm>(field: K, value: OrderForm[K]) => void;
   setOrderPlaced: (placed: boolean) => void;
 }
@@ -83,7 +90,9 @@ export const useConfigStore = create<ConfigState>((set) => ({
   swingarm: "standar",
   decalDesign: null,
   decalColor: "putih",
+  decalCustomColor: "",
   decalMaterial: "glossy",
+  decalNotes: "",
   order: EMPTY_ORDER,
   orderPlaced: false,
 
@@ -112,6 +121,8 @@ export const useConfigStore = create<ConfigState>((set) => ({
   setDecalDesign: (id) => set({ decalDesign: id }),
   setDecalColor: (id) => set({ decalColor: id }),
   setDecalMaterial: (id) => set({ decalMaterial: id }),
+  setDecalCustomColor: (text) => set({ decalCustomColor: text }),
+  setDecalNotes: (text) => set({ decalNotes: text }),
   // Mengubah data pesanan membatalkan status "sudah dipesan".
   setOrderField: (field, value) => set((s) => ({ order: { ...s.order, [field]: value }, orderPlaced: false })),
   setOrderPlaced: (placed) => set({ orderPlaced: placed }),

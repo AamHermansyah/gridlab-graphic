@@ -1,12 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { DECAL_COLORS, DECAL_DESIGNS, DECAL_MATERIALS, findOption, formatRupiah } from "@/data/catalog";
+import {
+  CUSTOM_COLOR_ID,
+  CUSTOM_COLOR_PREVIEW_HEX,
+  DECAL_COLORS,
+  DECAL_DESIGNS,
+  DECAL_MATERIALS,
+  findOption,
+  formatRupiah,
+} from "@/data/catalog";
 import { drawDecal } from "@/lib/decalTextures";
 import { useConfigStore } from "@/store/useConfigStore";
 import type { DecalDesignId } from "@/types/catalog";
 import { ArrowIcon, CheckIcon } from "../icons";
 import { ChoiceChip, FOCUS, Note, OptionCard, SectionTitle, extraPriceLabel } from "./controls";
+
+const DECAL_NOTES_MAX = 500;
 
 /** Pratinjau kecil sebuah desain decal dalam satu warna (kiri = belakang motor, kanan = depan). */
 function DecalPreview({ design, color }: { design: DecalDesignId; color: string }) {
@@ -25,7 +35,7 @@ function DesignGrid({ onConfigure }: { onConfigure: () => void }) {
   const decalDesign = useConfigStore((s) => s.decalDesign);
   const decalColor = useConfigStore((s) => s.decalColor);
   const setDecalDesign = useConfigStore((s) => s.setDecalDesign);
-  const colorHex = findOption(DECAL_COLORS, decalColor).hex;
+  const colorHex = decalColor === CUSTOM_COLOR_ID ? CUSTOM_COLOR_PREVIEW_HEX : findOption(DECAL_COLORS, decalColor).hex;
 
   return (
     <section aria-label="Desain decal">
@@ -81,6 +91,10 @@ function DesignOptions({ design, onBack }: { design: DecalDesignId; onBack: () =
   const decalMaterial = useConfigStore((s) => s.decalMaterial);
   const setDecalColor = useConfigStore((s) => s.setDecalColor);
   const setDecalMaterial = useConfigStore((s) => s.setDecalMaterial);
+  const decalCustomColor = useConfigStore((s) => s.decalCustomColor);
+  const setDecalCustomColor = useConfigStore((s) => s.setDecalCustomColor);
+  const decalNotes = useConfigStore((s) => s.decalNotes);
+  const setDecalNotes = useConfigStore((s) => s.setDecalNotes);
 
   return (
     <>
@@ -105,7 +119,7 @@ function DesignOptions({ design, onBack }: { design: DecalDesignId; onBack: () =
       </div>
 
       <section aria-label="Varian warna">
-        <SectionTitle note={`${DECAL_COLORS.length} varian`}>Varian warna</SectionTitle>
+        <SectionTitle note={`${DECAL_COLORS.length} varian + kustom`}>Varian warna</SectionTitle>
         <div className="grid grid-cols-2 gap-1.5">
           {DECAL_COLORS.map((option) => (
             <ChoiceChip
@@ -115,7 +129,29 @@ function DesignOptions({ design, onBack }: { design: DecalDesignId; onBack: () =
               onClick={() => setDecalColor(option.id)}
             />
           ))}
+          <ChoiceChip
+            label="Kustom"
+            active={decalColor === CUSTOM_COLOR_ID}
+            onClick={() => setDecalColor(CUSTOM_COLOR_ID)}
+          />
         </div>
+        {decalColor === CUSTOM_COLOR_ID && (
+          <div className="mt-2">
+            <label htmlFor="decal-warna-kustom" className="mb-1.5 block text-xs leading-snug text-white/55">
+              Warna yang diinginkan tidak ada di daftar? Tulis warnanya, nanti dikonfirmasi admin.
+            </label>
+            <input
+              id="decal-warna-kustom"
+              name="decalCustomColor"
+              type="text"
+              value={decalCustomColor}
+              onChange={(e) => setDecalCustomColor(e.target.value)}
+              maxLength={80}
+              placeholder="Contoh: biru tosca, atau kode warna #00b8a9"
+              className="h-11 w-full border border-white/15 bg-white/[0.05] px-3 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-accent"
+            />
+          </div>
+        )}
       </section>
 
       <section aria-label="Bahan decal" className="mt-5">
@@ -134,6 +170,26 @@ function DesignOptions({ design, onBack }: { design: DecalDesignId; onBack: () =
         </div>
         <p className="mt-2 text-xs leading-snug text-white/45">
           Daftar bahan dan harganya masih contoh, menunggu daftar bahan asli.
+        </p>
+      </section>
+
+      <section aria-label="Kustomisasi desain" className="mt-5">
+        <SectionTitle note="Opsional">Kustomisasi desain</SectionTitle>
+        <label htmlFor="decal-kustom" className="mb-1.5 block text-xs leading-snug text-white/55">
+          Jelaskan permintaan khusus untuk desain decal ini, misalnya gambar, posisi, atau bagian motor yang dituju.
+        </label>
+        <textarea
+          id="decal-kustom"
+          name="decalNotes"
+          value={decalNotes}
+          onChange={(e) => setDecalNotes(e.target.value)}
+          rows={5}
+          maxLength={DECAL_NOTES_MAX}
+          placeholder="Contoh: gambar naga di cover samping, kepalanya di bagian depan dekat headlamp"
+          className="w-full resize-none border border-white/15 bg-white/[0.05] px-3 py-2 text-sm text-white outline-none transition-colors placeholder:text-white/30 focus:border-accent"
+        />
+        <p className="hud-label mt-1 text-right text-white/40">
+          {decalNotes.length}/{DECAL_NOTES_MAX}
         </p>
       </section>
     </>

@@ -102,6 +102,12 @@ export const DECAL_COLORS: readonly ColorOption[] = [
   { id: "ungu", nama: "Ungu", hex: "#7a35d0" },
 ];
 
+/** Id pilihan "Kustom" pada varian warna decal: warna di luar daftar, dijelaskan user lewat teks. */
+export const CUSTOM_COLOR_ID = "kustom";
+
+/** Warna netral untuk pratinjau saat varian warna "Kustom" dipilih (warnanya belum diketahui). */
+export const CUSTOM_COLOR_PREVIEW_HEX = "#b8bcc4";
+
 /**
  * Bahan decal (MOCKUP: daftar dan harganya masih contoh, menunggu daftar bahan
  * asli). Harga adalah tambahan di atas harga desain decal.

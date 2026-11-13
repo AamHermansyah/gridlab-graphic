@@ -3,6 +3,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import { getBike } from "@/data/bikes";
 import {
+  CUSTOM_COLOR_ID,
   DECAL_COLORS,
   DECAL_DESIGNS,
   DECAL_MATERIALS,
@@ -99,7 +100,19 @@ function OrderSummary() {
       <SectionTitle note="Harga contoh">Pesananmu</SectionTitle>
       <div className="hud-cut-sm flex flex-col gap-1 border border-white/10 bg-white/[0.04] px-3 py-2.5">
         <Row label="Motor">{bike.nama}</Row>
-        <Row label="Varian warna decal">{findOption(DECAL_COLORS, state.decalColor).nama}</Row>
+        <Row label="Varian warna decal">
+          {state.decalColor === CUSTOM_COLOR_ID
+            ? `Kustom: ${state.decalCustomColor.trim() || "belum dijelaskan"}`
+            : findOption(DECAL_COLORS, state.decalColor).nama}
+        </Row>
+        {state.decalNotes.trim() && (
+          <div className="text-sm text-white/75">
+            <p>Kustomisasi desain</p>
+            <p className="mt-0.5 whitespace-pre-wrap break-words border-l-2 border-accent/60 pl-2.5 text-white/60">
+              {state.decalNotes.trim()}
+            </p>
+          </div>
+        )}
         <div className="my-1 border-t border-white/10" />
         <Row label={`Decal ${design.nama}`}>Rp {formatRupiah(design.harga)}</Row>
         <Row label={`Bahan ${material.nama}`}>{material.harga ? `Rp ${formatRupiah(material.harga)}` : "Termasuk"}</Row>
