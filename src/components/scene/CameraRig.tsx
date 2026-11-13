@@ -178,8 +178,9 @@ export function CameraRig() {
       maxDistance={ORBIT_LIMITS.maxDistance}
       minPolarAngle={ORBIT_LIMITS.minPolar}
       maxPolarAngle={ORBIT_LIMITS.maxPolar}
-      minAzimuthAngle={-ORBIT_LIMITS.maxAzimuth}
-      maxAzimuthAngle={ORBIT_LIMITS.maxAzimuth}
+      // Azimuth tidak dibatasi: kamera bisa di-swipe dua arah dan muter penuh
+      // 360°. Dinding bengkel otomatis disembunyikan saat dilewati kamera
+      // (lihat GARAGE.* dan WorkshopModel), jadi tidak menghalangi pandangan.
       // User mulai menggeser sendiri: batalkan transisi dan lepas preset aktif.
       onStart={() => {
         rig.current.transitioning = false;

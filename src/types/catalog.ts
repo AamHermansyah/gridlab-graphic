@@ -6,9 +6,12 @@ export type BikeId = "ninja" | "gsx";
 export type FlowStep = "motor" | "kustom" | "decal" | "pesan";
 
 /** Kategori di tahap kustomisasi (menyamakan tampilan dengan motor milik user; tanpa biaya). */
-export type CustomCategoryId = "bodi" | "ban" | "kepala" | "swingarm";
+export type CustomCategoryId = "bodi" | "kepala" | "kaki";
 
 export type TireId = "tahu" | "biasa" | "supermotor";
+
+/** Tipe garpu/shockbreaker depan: USD (terbalik) atau teleskopik konvensional. */
+export type ForkId = "usd" | "tele";
 
 /** Gaya kepala depan: lampu utama atau papan nomor cross. */
 export type HeadStyleId = "headlamp" | "papan";

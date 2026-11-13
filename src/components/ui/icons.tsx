@@ -37,20 +37,12 @@ const CATEGORY_PATHS: Record<CustomCategoryId, ReactNode> = {
       <path d="M8 9.5c1.4-1.2 2.6-1.2 4 0v5c-1.4 1.2-2.6 1.2-4 0z" />
     </>
   ),
-  // Ban: roda dengan tapak di bagian luar
-  ban: (
+  // Kaki-kaki: garpu depan bertemu roda
+  kaki: (
     <>
-      <circle cx="12" cy="12" r="8.5" />
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 3.5v4.5M19.7 7.75l-3.9 2.25M19.7 16.25l-3.9-2.25M4.3 16.25l3.9-2.25M4.3 7.75l3.9 2.25" />
-    </>
-  ),
-  // Swing arm: lengan dari poros ke as roda belakang
-  swingarm: (
-    <>
-      <path d="M4.5 8.5l13.5 5.2v3.6L4.5 12.5z" />
-      <circle cx="5.5" cy="10.5" r="2.5" />
-      <circle cx="17.5" cy="15.5" r="2.8" />
+      <circle cx="12" cy="16" r="4" />
+      <circle cx="12" cy="16" r="1" />
+      <path d="M8 3.5l2.4 9M16 3.5l-2.4 9" />
     </>
   ),
 };

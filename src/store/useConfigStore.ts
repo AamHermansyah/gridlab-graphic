@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { DEFAULT_BIKE_ID, getBike } from "@/data/bikes";
 import { DECAL_DESIGNS, DECAL_MATERIALS, FLOW_STEPS, SHIPPING_OPTIONS, findOption } from "@/data/catalog";
-import type { BikeId, DecalDesignId, DecalMaterialId, FlowStep, HeadStyleId, OrderForm, PlateBrandId, SwingarmId, TireId } from "@/types/catalog";
+import type { BikeId, DecalDesignId, DecalMaterialId, FlowStep, ForkId, HeadStyleId, OrderForm, PlateBrandId, SwingarmId, TireId } from "@/types/catalog";
 
 // State konfigurasi: tahap alur, motor terpilih, pilihan user, dan data pesanan.
 
@@ -30,6 +30,8 @@ interface ConfigState {
   /** Warna tiap bagian bodi: id bagian -> id warna. */
   bodyColors: Record<string, string>;
   tire: TireId;
+  /** Tipe garpu/shockbreaker depan (USD atau tele). */
+  fork: ForkId;
   /** Gaya kepala depan; papan nomor memakai merek di plateBrand. */
   headStyle: HeadStyleId;
   plateBrand: PlateBrandId;
@@ -50,6 +52,7 @@ interface ConfigState {
   setAllBodyColors: (colorId: string) => void;
   resetBodyColors: () => void;
   setTire: (id: TireId) => void;
+  setFork: (id: ForkId) => void;
   setHeadStyle: (id: HeadStyleId) => void;
   setPlateBrand: (id: PlateBrandId) => void;
   setSwingarm: (id: SwingarmId) => void;
@@ -74,6 +77,7 @@ export const useConfigStore = create<ConfigState>((set) => ({
   bikeId: DEFAULT_BIKE_ID,
   bodyColors: defaultBodyColors(DEFAULT_BIKE_ID),
   tire: "biasa",
+  fork: "usd",
   headStyle: "headlamp",
   plateBrand: "rmz",
   swingarm: "standar",
@@ -101,6 +105,7 @@ export const useConfigStore = create<ConfigState>((set) => ({
     set((s) => ({ bodyColors: Object.fromEntries(Object.keys(s.bodyColors).map((k) => [k, colorId])) })),
   resetBodyColors: () => set((s) => ({ bodyColors: defaultBodyColors(s.bikeId) })),
   setTire: (id) => set({ tire: id }),
+  setFork: (id) => set({ fork: id }),
   setHeadStyle: (id) => set({ headStyle: id }),
   setPlateBrand: (id) => set({ plateBrand: id }),
   setSwingarm: (id) => set({ swingarm: id }),

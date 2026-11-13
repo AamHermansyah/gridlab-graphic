@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { getBike } from "@/data/bikes";
-import { CUSTOM_CATEGORIES, HEAD_STYLE_OPTIONS, PAINT_COLORS, PLATE_BRAND_OPTIONS, SWINGARM_OPTIONS, TIRE_OPTIONS, findOption } from "@/data/catalog";
+import { CUSTOM_CATEGORIES, FORK_OPTIONS, HEAD_STYLE_OPTIONS, PAINT_COLORS, PLATE_BRAND_OPTIONS, SWINGARM_OPTIONS, TIRE_OPTIONS, findOption } from "@/data/catalog";
 import { useConfigStore } from "@/store/useConfigStore";
 import { useSceneStore } from "@/store/useSceneStore";
 import { CategoryIcon } from "../icons";
@@ -133,11 +134,33 @@ function HeadOptions() {
   );
 }
 
+/** Garpu depan: USD atau teleskopik konvensional. */
+function ForkOptions() {
+  const fork = useConfigStore((s) => s.fork);
+  const setFork = useConfigStore((s) => s.setFork);
+  return (
+    <section aria-label="Shockbreaker depan" className="mt-5">
+      <SectionTitle note={`${FORK_OPTIONS.length} pilihan`}>Shockbreaker depan</SectionTitle>
+      <div className="flex flex-col gap-1.5">
+        {FORK_OPTIONS.map((option) => (
+          <OptionCard
+            key={option.id}
+            title={option.nama}
+            description={option.deskripsi}
+            active={option.id === fork}
+            onClick={() => setFork(option.id)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function SwingarmOptions() {
   const swingarm = useConfigStore((s) => s.swingarm);
   const setSwingarm = useConfigStore((s) => s.setSwingarm);
   return (
-    <section aria-label="Swing arm">
+    <section aria-label="Swing arm" className="mt-5">
       <SectionTitle note={`${SWINGARM_OPTIONS.length} pilihan`}>Swing arm</SectionTitle>
       <div className="flex flex-col gap-1.5">
         {SWINGARM_OPTIONS.map((option) => (
@@ -156,11 +179,15 @@ function SwingarmOptions() {
 
 /**
  * Tahap 2: menyamakan tampilan motor di layar dengan motor milik user (bodi,
- * ban, kepala, swing arm). Tahap ini tidak berbiaya; yang dijual hanya decal.
+ * kepala, kaki-kaki). Tahap ini tidak berbiaya; yang dijual hanya decal.
  */
 export function StepCustomize() {
   const activeCategory = useSceneStore((s) => s.activeCategory);
   const selectCategory = useSceneStore((s) => s.selectCategory);
+  const resetCategory = useSceneStore((s) => s.resetCategory);
+
+  // Masuk tahap ini selalu mulai dari kategori bodi.
+  useEffect(() => resetCategory(), [resetCategory]);
 
   return (
     <>
@@ -168,7 +195,7 @@ export function StepCustomize() {
         <Note>Samakan dengan kondisi motormu sekarang supaya hasil decal terlihat akurat. Tahap ini tanpa biaya.</Note>
       </div>
 
-      <nav aria-label="Kategori kustomisasi" className="mb-3 grid grid-cols-4 gap-1.5">
+      <nav aria-label="Kategori kustomisasi" className="mb-3 grid grid-cols-3 gap-1.5">
         {CUSTOM_CATEGORIES.map((category) => {
           const isActive = category.id === activeCategory;
           return (
@@ -194,9 +221,14 @@ export function StepCustomize() {
       </nav>
 
       {activeCategory === "bodi" && <BodyColors />}
-      {activeCategory === "ban" && <TireOptions />}
       {activeCategory === "kepala" && <HeadOptions />}
-      {activeCategory === "swingarm" && <SwingarmOptions />}
+      {activeCategory === "kaki" && (
+        <>
+          <TireOptions />
+          <ForkOptions />
+          <SwingarmOptions />
+        </>
+      )}
     </>
   );
 }

@@ -46,9 +46,7 @@ export const ORBIT_LIMITS = {
   minPolar: 0.1,
   // Sedikit di atas lantai supaya kamera tidak menembus beton.
   maxPolar: 1.5,
-  // ±100° dari sisi samping: depan dan belakang terjangkau, tetapi kamera
-  // tidak bisa masuk ke balik dinding belakang.
-  maxAzimuth: (100 * Math.PI) / 180,
+  // Azimuth bebas 360°: dinding otomatis disembunyikan saat dilewati kamera.
 } as const;
 
 export const COLORS = {

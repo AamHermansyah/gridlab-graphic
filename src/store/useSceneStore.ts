@@ -29,6 +29,7 @@ interface SceneState {
   togglePanel: () => void;
   openPanel: () => void;
   selectCategory: (id: CustomCategoryId) => void;
+  resetCategory: () => void;
 }
 
 export const useSceneStore = create<SceneState>((set) => ({
@@ -57,4 +58,7 @@ export const useSceneStore = create<SceneState>((set) => ({
 
   // Memilih kategori sekaligus membuka sheet (di mobile).
   selectCategory: (id) => set({ activeCategory: id, panelOpen: true }),
+
+  // Masuk tahap kustom selalu mulai dari kategori bodi.
+  resetCategory: () => set((s) => (s.activeCategory === "bodi" ? s : { activeCategory: "bodi" })),
 }));

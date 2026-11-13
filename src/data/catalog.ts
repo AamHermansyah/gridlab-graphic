@@ -4,6 +4,7 @@ import type {
   DecalDesignId,
   DecalMaterial,
   FlowStep,
+  ForkId,
   HeadStyleId,
   Option,
   PaymentId,
@@ -29,9 +30,8 @@ export const FLOW_STEPS: readonly { id: FlowStep; label: string; judul: string }
 
 export const CUSTOM_CATEGORIES: readonly CustomCategory[] = [
   { id: "bodi", label: "Bodi" },
-  { id: "ban", label: "Ban" },
   { id: "kepala", label: "Kepala" },
-  { id: "swingarm", label: "Swing Arm" },
+  { id: "kaki", label: "Kaki-kaki" },
 ];
 
 export const PAINT_COLORS: readonly ColorOption[] = [
@@ -52,6 +52,12 @@ export const TIRE_OPTIONS: readonly Option<TireId>[] = [
   { id: "tahu", nama: "Ban tahu", deskripsi: "Licin tanpa tapak seperti ban drag." },
   { id: "biasa", nama: "Ban biasa", deskripsi: "Tapak standar bawaan motor." },
   { id: "supermotor", nama: "Ban supermotor", deskripsi: "Tapak lebar dan lebat untuk sportbike." },
+];
+
+/** Pilihan shockbreaker/garpu depan (MOCKUP: belum memengaruhi tampilan 3D). */
+export const FORK_OPTIONS: readonly Option<ForkId>[] = [
+  { id: "usd", nama: "USD", deskripsi: "Upside down: garpu terbalik, lebih kaku dan ringan." },
+  { id: "tele", nama: "Tele", deskripsi: "Teleskopik konvensional seperti motor standar." },
 ];
 
 /** Gaya kepala depan (MOCKUP: belum memengaruhi tampilan 3D). */
