@@ -101,7 +101,10 @@ async function gray(name, size) {
   } else {
     img = open(file).removeAlpha().extractChannel(0);
   }
-  return img.resize(size, size, { fit: "fill" }).raw().toBuffer();
+  // toColourspace("b-w") memastikan keluaran tepat 1 kanal. Tanpa ini sharp baru
+  // mengubah gambar abu-abu menjadi RGB (3 kanal) saat resize, sehingga buffer
+  // 3x lebih besar dan alpha/AO/roughness terbaca bergeser (muncul garis-garis).
+  return img.resize(size, size, { fit: "fill" }).toColourspace("b-w").raw().toBuffer();
 }
 
 async function run() {

@@ -8,8 +8,10 @@ import type { CameraPreset, CameraView } from "@/types/scene";
 export const DEFAULT_CAMERA_VIEW: CameraView = {
   azimuth: 0.65,
   polar: 1.25,
-  minDistance: 5.6,
-  fitHalfWidth: 1.75,
+  // Cukup dekat supaya kamera awal masih di dalam bengkel (z < GARAGE.frontZ)
+  // dan dinding depan tidak ikut disembunyikan.
+  minDistance: 3.6,
+  fitHalfWidth: 1.6,
   fitHalfHeight: 1.1,
 };
 

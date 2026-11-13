@@ -3,7 +3,7 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import { Mesh, MeshStandardMaterial, Vector3, type Material, type Object3D, type Texture } from "three";
+import { DoubleSide, Mesh, MeshStandardMaterial, Vector3, type Material, type Object3D, type Texture } from "three";
 import { createPosterAtlasTexture } from "@/lib/proceduralTextures";
 import { GARAGE } from "@/lib/sceneConstants";
 import { useDisposable } from "@/lib/useDisposable";
@@ -31,6 +31,10 @@ function tuneMaterial(source: Material, posterAtlas: Texture): Material {
     // Poster bawaan memuat karya pihak lain: diganti atlas buatan sendiri.
     material.map = posterAtlas;
     material.roughness = 0.75;
+  } else if (name === "mat_garage_wheel") {
+    // Mesh ban tidak tertutup / sisi dalamnya menghadap ke dalam: dengan culling
+    // bawaan bagian belakang ban tampak transparan. Gambar kedua sisi.
+    material.side = DoubleSide;
   } else if (name === "mat_garage_lamp") {
     // Tabung lampu neon menyala
     material.emissiveIntensity = 3;
