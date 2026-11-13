@@ -33,14 +33,19 @@ export const BIKES: readonly BikeDefinition[] = [
     deskripsi: "Motor naked 4 silinder dengan cover bodi bersudut tajam.",
     url: "/models/bikes/gsx.glb",
     spec: { panjang: 2.08, lebar: 0.76, tinggi: 1.18, jarakSumbuRoda: 1.46 },
+    // Input warna di tahap kustom disamakan dengan Ninja: spakbor depan, kepala,
+    // cover samping depan, cover samping belakang, dan buntut. Bagian lain
+    // (tangki, cover tangki, cover bawah mesin) tetap dicat bawaan tanpa input.
+    // Node GLB gsx belum punya cover samping belakang, jadi entri itu panel saja.
     bodyParts: [
       { id: "bodi_spakbor_depan", nama: "Spakbor depan", warnaBawaan: "biru" },
-      { id: "bodi_cover_lampu", nama: "Cover lampu depan", warnaBawaan: "biru" },
+      { id: "bodi_cover_lampu", nama: "Kepala (papan nomor)", warnaBawaan: "biru" },
       { id: "bodi_cover_samping", nama: "Cover samping depan", warnaBawaan: "biru" },
-      { id: "bodi_cover_tangki", nama: "Cover tangki", warnaBawaan: "hitam" },
-      { id: "bodi_tangki", nama: "Tangki", warnaBawaan: "biru" },
+      { id: "bodi_cover_samping_belakang", nama: "Cover samping belakang", warnaBawaan: "biru" },
+      { id: "bodi_tangki", nama: "Tangki", warnaBawaan: "biru", tanpaInput: true },
+      { id: "bodi_cover_tangki", nama: "Cover tangki", warnaBawaan: "hitam", tanpaInput: true },
+      { id: "bodi_cover_bawah", nama: "Cover bawah mesin", warnaBawaan: "hitam", tanpaInput: true },
       { id: "bodi_buntut", nama: "Cover belakang (buntut)", warnaBawaan: "biru" },
-      { id: "bodi_cover_bawah", nama: "Cover bawah mesin", warnaBawaan: "hitam" },
     ],
     warnaSwingarm: "#1a1b1e",
   },
